@@ -1,0 +1,145 @@
+﻿@model GadIdan.Attractions
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>צור חדש</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>אטרקציה</h4>
+        <hr />                
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <label class="control-label col-md-2">אטרקיצה</label>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("LocationID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LocationID, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2" for="LocationID">מיקום</label>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AttractionDate, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2">תאריך</label>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionPrice, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AttractionPrice, "", new { @class = "text-danger" })
+            </div>            
+            <label class="control-label col-md-2">מחיר</label>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2">מחיר מלא</label>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("AttractionTypeID", null, htmlAttributes: new { @class = "", id = "AttractionTypeID" })
+                @Html.EditorFor(model => model.AttractionTypeValue, new { htmlAttributes = new { @class = "", id = "AttractionTypeValue" } })
+            </div>
+            <label class="control-label col-md-2" for="SiteID">אתר</label>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("SiteID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SiteID, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2" for="SiteID">אתר</label>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionSiteUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AttractionSiteUrl, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2">לינק לאתר</label>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionData1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AttractionData1, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2">תוספת 1</label>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AttractionData2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AttractionData2, "", new { @class = "text-danger" })
+            </div>
+            <label class="control-label col-md-2">תוספת 2</label>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="הוסף" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("חזור לאטרקציות", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#AttractionTypeID").change(CalcChange);
+        $("#AttractionTypeValue").change(function () {
+            if ($("#AttractionTypeID").val() != 3)
+            CalcChange();
+        });
+        $("#Price").change(CalcChange);
+        $("#AttractionPrice").change(CalcChange);
+    });
+    function CalcChange() {
+
+        switch (eval($("#AttractionTypeID").val())) {
+            case 1:
+                $('#AttractionPrice').val($("#Price").val() * $("#AttractionTypeValue").val() / 100);
+                break;
+            case 2:
+                $('#AttractionPrice').val($("#Price").val() - $("#AttractionTypeValue").val());
+                break;
+            case 3:
+                $('#AttractionPrice').val($("#Price").val() / 2);
+                $('#AttractionTypeValue').val(2);
+                break;
+            case 4:
+                if ($("#AttractionTypeValue").val()) {
+                    $('#AttractionPrice').val($("#Price").val() / $("#AttractionTypeValue").val());
+                }
+                break;
+            default:
+        }
+
+    }
+
+</script>

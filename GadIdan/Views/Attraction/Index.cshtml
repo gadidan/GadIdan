@@ -1,0 +1,99 @@
+﻿@model PagedList.IPagedList<Attractions>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
+<style type="text/css">
+    th {
+        text-align:right;
+    }
+</style>
+<h2>אטרקציות</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        <table class="table" style="width:70%;">
+            <tr>
+                <th>אטרקציה</th>
+                <th>טקסט חופשי</th>
+                <th>מיקום</th>
+                <th>&nbsp;</th>
+            </tr>
+            <tr>
+                <td style="">@Html.DropDownList("SelectedAttraction", "All")</td>
+                <td>@Html.TextBox("attractionName")</td>
+                <td>@Html.DropDownList("LocationID", "All")</td>
+                <td><input type="submit" value="סנן" class="btn btn-info" /></td>
+            </tr>
+        </table>
+    </p>
+}
+
+
+<table class="table  table-striped table-bordered table-hover table-condensed">
+
+    <tr>
+        <th>&nbsp;</th>
+        <th>שם</th>
+        <th>מיקום</th>
+        <th>תאריך</th>
+        <th>מחיר הנחה</th>
+        <th>מחיר מלא</th>
+        <th>סוג הנחה</th>
+        <th>אתר הנחה</th>
+        <th>לינק להנחה</th>
+        <th>תוספת 1</th>
+        <th>תוספת 2</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Locations.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionTypes.AttractionTypeName)&nbsp;(@Html.DisplayFor(modelItem => item.AttractionTypeValue))
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.Sites.SiteName)
+            </td>
+            <td>
+                <a href="@Html.DisplayFor(modelItem => item.AttractionSiteUrl)">לאתר</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionData1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttractionData2)
+            </td>
+            <td style="font-family:Arial; font-size:13px;width:83px;">
+                @Html.ActionLink("ערוך", "Edit", new { id = item.Id })  | @Html.ActionLink("מחק", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+    <input type="button" onclick="location.href='@Url.Action("Create", "Attraction")'" class="btn btn-primary" value="הוסף חדש" />

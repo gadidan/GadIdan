@@ -1,0 +1,58 @@
+﻿@model GadIdan.Attractions
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h3>אתה בטוח שברצונך למחוק אטרציה זאת?</h3>
+<div>
+    <h4>מחיקת אטרקציה</h4>
+    <hr />
+    <table class="table" style="width:50%;">
+        <tr>
+            <th style="text-align:right;">אטרקציה</th>
+            <td>@Html.DisplayFor(model => model.AttractionName)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">מיקום</th>
+            <td>@Html.DisplayFor(model => model.Locations.LocationName)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">תאריך</th>
+            <td>@Html.DisplayFor(model => model.AttractionDate)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">מחיר</th>
+            <td>@Html.DisplayFor(model => model.AttractionPrice)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">מחיר מלא</th>
+            <td>@Html.DisplayFor(model => model.Price)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">אתר</th>
+            <td>@Html.DisplayFor(model => model.Sites.SiteName)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">תוספת 1</th>
+            <td>@Html.DisplayFor(model => model.AttractionData1)</td>
+        </tr>
+        <tr>
+            <th style="text-align:right;">תוספת 2</th>
+            <td>@Html.DisplayFor(model => model.AttractionData1)</td>
+        </tr>
+    </table>
+    
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="מחק" class="btn btn-danger" />           
+        </div>        
+    }
+</div>
+<br />
+<div>
+    @Html.ActionLink("חזור לאטרקציות", "Index")
+</div>

@@ -1,0 +1,54 @@
+﻿@model PagedList.IPagedList<Attractions>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .atrImage {
+        width: 250px;
+    } 
+    .innerTD{
+        width:280px;
+    }   
+</style>
+@{
+    int index = 0;
+}
+
+
+<table>
+
+    @foreach (var item in Model)
+    {
+        if (index % 4 == 0){
+            @:<tr>
+        }
+        <td class="innerTD">
+            <table>
+                <tr style="height:200px;">
+                    <td>
+                        <img src="@Url.Content(item.AttractionImage)" alt="" class="atrImage" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AttractionName)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        החל מ- @Html.DisplayFor(modelItem => item.AttractionPrice) (<del>@Html.DisplayFor(modelItem => item.Price)</del>)
+                    </td>
+                </tr>
+            </table>
+        </td>
+
+        if (index + 1 % 5 == 0)
+        {
+                @:</tr>
+        }
+        index++;
+    }
+</table>

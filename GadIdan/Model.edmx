@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="genifacedbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attractions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttractionID" Type="int" Nullable="false" />
+          <Property Name="AttractionName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="AttractionDate" Type="datetime" Nullable="false" />
+          <Property Name="AttractionPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="SiteID" Type="int" Nullable="false" />
+          <Property Name="AttractionSiteUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="AttractionData1" Type="nvarchar" MaxLength="500" />
+          <Property Name="AttractionData2" Type="nvarchar" MaxLength="500" />
+          <Property Name="AttractionTypeID" Type="int" />
+          <Property Name="AttractionTypeValue" Type="int" />
+          <Property Name="AttractionImage" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="AttractionTypes">
+          <Key>
+            <PropertyRef Name="AttractionTypeID" />
+          </Key>
+          <Property Name="AttractionTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AttractionTypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="LocationAddress" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="LocationData1" Type="nvarchar" MaxLength="500" />
+          <Property Name="LocationData2" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="SiteID" />
+          </Key>
+          <Property Name="SiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SiteUrl" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="SiteData" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <Association Name="FK_Attractions_AttractionTypes">
+          <End Role="AttractionTypes" Type="Self.AttractionTypes" Multiplicity="0..1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttractionTypes">
+              <PropertyRef Name="AttractionTypeID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="AttractionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attractions_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attractions_Sites">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="Attractions" Type="Self.Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="SiteID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="SiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="genifacedbModelStoreContainer">
+          <EntitySet Name="Attractions" EntityType="Self.Attractions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AttractionTypes" EntityType="Self.AttractionTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations" EntityType="Self.Locations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sites" EntityType="Self.Sites" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attractions_AttractionTypes" Association="Self.FK_Attractions_AttractionTypes">
+            <End Role="AttractionTypes" EntitySet="AttractionTypes" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attractions_Locations" Association="Self.FK_Attractions_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attractions_Sites" Association="Self.FK_Attractions_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="genifacedbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Locations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationData1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LocationData2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attractions" Relationship="genifacedbModel.FK_Attractions_Locations" FromRole="Locations" ToRole="Attractions" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="SiteID" />
+          </Key>
+          <Property Name="SiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SiteName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SiteUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SiteData" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attractions" Relationship="genifacedbModel.FK_Attractions_Sites" FromRole="Sites" ToRole="Attractions" />
+        </EntityType>
+        <EntityContainer Name="genifacedbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Locations" EntityType="Self.Locations" />
+          <EntitySet Name="Sites" EntityType="Self.Sites" />
+          <EntitySet Name="AttractionTypes" EntityType="genifacedbModel.AttractionTypes" />
+          <EntitySet Name="Attractions" EntityType="genifacedbModel.Attractions" />
+          <AssociationSet Name="FK_Attractions_AttractionTypes" Association="genifacedbModel.FK_Attractions_AttractionTypes">
+            <End Role="AttractionTypes" EntitySet="AttractionTypes" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attractions_Locations" Association="genifacedbModel.FK_Attractions_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Attractions_Sites" Association="genifacedbModel.FK_Attractions_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Attractions" EntitySet="Attractions" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="AttractionTypes">
+          <Key>
+            <PropertyRef Name="AttractionTypeID" />
+          </Key>
+          <Property Name="AttractionTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttractionTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Attractions" Relationship="genifacedbModel.FK_Attractions_AttractionTypes" FromRole="AttractionTypes" ToRole="Attractions" />
+        </EntityType>
+        <EntityType Name="Attractions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AttractionID" Type="Int32" Nullable="false" />
+          <Property Name="AttractionName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="AttractionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AttractionPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SiteID" Type="Int32" Nullable="false" />
+          <Property Name="AttractionSiteUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AttractionData1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AttractionData2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="AttractionTypeID" Type="Int32" />
+          <Property Name="AttractionTypeValue" Type="Int32" />
+          <Property Name="AttractionImage" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AttractionTypes" Relationship="genifacedbModel.FK_Attractions_AttractionTypes" FromRole="Attractions" ToRole="AttractionTypes" />
+          <NavigationProperty Name="Locations" Relationship="genifacedbModel.FK_Attractions_Locations" FromRole="Attractions" ToRole="Locations" />
+          <NavigationProperty Name="Sites" Relationship="genifacedbModel.FK_Attractions_Sites" FromRole="Attractions" ToRole="Sites" />
+        </EntityType>
+        <Association Name="FK_Attractions_AttractionTypes">
+          <End Type="genifacedbModel.AttractionTypes" Role="AttractionTypes" Multiplicity="0..1" />
+          <End Type="genifacedbModel.Attractions" Role="Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttractionTypes">
+              <PropertyRef Name="AttractionTypeID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="AttractionTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attractions_Locations">
+          <End Type="genifacedbModel.Locations" Role="Locations" Multiplicity="1" />
+          <End Type="genifacedbModel.Attractions" Role="Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Attractions_Sites">
+          <End Type="genifacedbModel.Sites" Role="Sites" Multiplicity="1" />
+          <End Type="genifacedbModel.Attractions" Role="Attractions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="SiteID" />
+            </Principal>
+            <Dependent Role="Attractions">
+              <PropertyRef Name="SiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="genifacedbModelStoreContainer" CdmEntityContainer="genifacedbEntities">
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="genifacedbModel.Locations">
+              <MappingFragment StoreEntitySet="Locations">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationAddress" ColumnName="LocationAddress" />
+                <ScalarProperty Name="LocationData1" ColumnName="LocationData1" />
+                <ScalarProperty Name="LocationData2" ColumnName="LocationData2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sites">
+            <EntityTypeMapping TypeName="genifacedbModel.Sites">
+              <MappingFragment StoreEntitySet="Sites">
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="SiteUrl" ColumnName="SiteUrl" />
+                <ScalarProperty Name="SiteData" ColumnName="SiteData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttractionTypes">
+            <EntityTypeMapping TypeName="genifacedbModel.AttractionTypes">
+              <MappingFragment StoreEntitySet="AttractionTypes">
+                <ScalarProperty Name="AttractionTypeName" ColumnName="AttractionTypeName" />
+                <ScalarProperty Name="AttractionTypeID" ColumnName="AttractionTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attractions">
+            <EntityTypeMapping TypeName="genifacedbModel.Attractions">
+              <MappingFragment StoreEntitySet="Attractions">
+                <ScalarProperty Name="AttractionImage" ColumnName="AttractionImage" />
+                <ScalarProperty Name="AttractionTypeValue" ColumnName="AttractionTypeValue" />
+                <ScalarProperty Name="AttractionTypeID" ColumnName="AttractionTypeID" />
+                <ScalarProperty Name="AttractionData2" ColumnName="AttractionData2" />
+                <ScalarProperty Name="AttractionData1" ColumnName="AttractionData1" />
+                <ScalarProperty Name="AttractionSiteUrl" ColumnName="AttractionSiteUrl" />
+                <ScalarProperty Name="SiteID" ColumnName="SiteID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="AttractionPrice" ColumnName="AttractionPrice" />
+                <ScalarProperty Name="AttractionDate" ColumnName="AttractionDate" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="AttractionName" ColumnName="AttractionName" />
+                <ScalarProperty Name="AttractionID" ColumnName="AttractionID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
